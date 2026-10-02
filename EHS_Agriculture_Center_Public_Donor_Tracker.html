@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EHS Agriculture Center — Flower Fundraiser</title>
+<style>
+:root{font-family:Arial,Helvetica,sans-serif;color:#243024;background:#f7fbf4}
+*{box-sizing:border-box}body{margin:0;background:#f7fbf4}.app{min-height:100vh;padding:32px 18px;background:#f7fbf4}
+.wrap{max-width:1000px;margin:auto;text-align:center}.eyebrow{font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.8rem;color:#52724d}
+h1{font-size:clamp(2.2rem,7vw,4.5rem);margin:8px 0 4px}.sub{font-size:1.05rem;color:#657064;margin:0 auto 24px;max-width:720px}
+.card{background:#fff;border:1px solid #dce7d9;border-radius:24px;padding:26px;box-shadow:0 12px 35px #24302412;margin-bottom:22px}
+.amount{font-size:clamp(2.2rem,8vw,4.5rem);font-weight:800}.goal{font-size:1rem;color:#687367;margin-top:2px}.bar{height:18px;background:#e6eee3;border-radius:999px;overflow:hidden;margin:20px 0 10px}.fill{height:100%;width:0;background:linear-gradient(90deg,#78a86c,#d2b45c);transition:width .7s ease}
+.stats{display:flex;justify-content:space-between;gap:16px;color:#5c6759}.stats strong{display:block;color:#243024;font-size:1.15rem;margin-top:3px}
+.flower{height:390px;position:relative;margin:20px auto 0;max-width:470px;overflow:hidden}.stem{position:absolute;bottom:18px;left:50%;width:18px;height:260px;background:#5c8a54;border-radius:20px;transform:translateX(-50%) scaleY(var(--grow));transform-origin:bottom;transition:transform .7s ease}.leaf{position:absolute;width:105px;height:48px;background:#6d9c5e;border-radius:100% 0 100% 0;bottom:115px;opacity:var(--grow);transition:opacity .7s ease}.leaf.l{left:calc(50% - 115px);transform:rotate(18deg)}.leaf.r{left:calc(50% + 10px);transform:scaleX(-1) rotate(18deg)}
+.head{position:absolute;left:50%;bottom:calc(250px * var(--grow) + 18px);transform:translateX(-50%);width:170px;height:170px;transition:bottom .7s ease,transform .7s ease}.petal{position:absolute;width:72px;height:105px;background:#e6a0a8;border-radius:55% 55% 48% 48%;left:49px;top:5px;transform-origin:50% 82px;opacity:calc(.18 + var(--grow) * .82);transition:opacity .7s ease}.p1{transform:rotate(0deg)}.p2{transform:rotate(60deg)}.p3{transform:rotate(120deg)}.p4{transform:rotate(180deg)}.p5{transform:rotate(240deg)}.p6{transform:rotate(300deg)}.center{position:absolute;width:66px;height:66px;border-radius:50%;background:#e4b64d;left:52px;top:58px;box-shadow:inset 0 0 0 9px #d29f35}.ground{position:absolute;bottom:0;left:8%;right:8%;height:20px;background:#789c68;border-radius:50%}
+.milestones{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:22px}.mile{padding:12px 6px;border-radius:14px;background:#f0f5ee;color:#687367;font-size:.85rem}.mile.done{background:#e0efdc;color:#365c31;font-weight:700}
+.section-title{font-size:1.8rem;margin:0 0 6px}.section-sub{color:#687367;margin:0 auto 18px;max-width:680px}.table-wrap{overflow-x:auto}.leaderboard{width:100%;border-collapse:collapse;text-align:left}.leaderboard th{background:#edf4ea;color:#52604f;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em}.leaderboard th,.leaderboard td{padding:13px 14px;border-bottom:1px solid #e3ebe1}.leaderboard tr:last-child td{border-bottom:0}.rank{font-weight:800;width:65px}.donation{text-align:right;font-weight:700;white-space:nowrap}.empty{padding:25px;color:#687367;background:#f4f8f2;border-radius:15px}
+.sponsors{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;text-align:left}.tier{border:1px solid #dce7d9;border-radius:18px;padding:17px;background:#fbfdfb}.tier h3{margin:0 0 4px;font-size:1.05rem}.tier .range{color:#687367;font-size:.82rem;margin-bottom:12px}.sponsor-list{margin:0;padding-left:20px;color:#384235}.sponsor-list li{padding:4px 0}.no-sponsors{color:#687367;font-size:.9rem}.note{margin-top:18px;color:#687367;font-size:.85rem}.error{color:#9a3b3b;background:#fff1f1;padding:12px;border-radius:12px;display:none;margin-top:15px}
+@media(max-width:700px){.stats{flex-direction:column;gap:8px}.milestones{grid-template-columns:repeat(2,1fr)}.flower{height:330px}.head{transform:translateX(-50%) scale(.85);transform-origin:center}.sub{font-size:.95rem}.sponsors{grid-template-columns:1fr}.card{padding:20px}.leaderboard th,.leaderboard td{padding:11px 9px}}
+</style>
+</head>
+<body>
+<main class="app"><div class="wrap">
+<div class="eyebrow">EHS Agriculture Center</div>
+<h1>Watch Our Flower Grow 🌸</h1>
+<p class="sub">Every contribution helps us grow closer to our $750,000 goal for the EHS Agriculture Center.</p>
+
+<section class="card">
+<div class="amount" id="amount">$0</div><div class="goal">of $750,000 raised</div>
+<div class="bar"><div class="fill" id="fill"></div></div>
+<div class="stats"><div><span>Progress</span><strong id="percent">0%</strong></div><div><span>Still needed</span><strong id="remaining">$750,000</strong></div></div>
+<div class="flower" id="flower" style="--grow:0"><div class="stem"></div><div class="leaf l"></div><div class="leaf r"></div><div class="head"><i class="petal p1"></i><i class="petal p2"></i><i class="petal p3"></i><i class="petal p4"></i><i class="petal p5"></i><i class="petal p6"></i><i class="center"></i></div><div class="ground"></div></div>
+<div class="milestones"><div class="mile" data-p="10">10% · $75K</div><div class="mile" data-p="25">25% · $187.5K</div><div class="mile" data-p="50">50% · $375K</div><div class="mile" data-p="100">100% · $750K</div></div>
+<div class="note">The total and public donor information update automatically from the shared fundraiser spreadsheet.</div><div class="error" id="error"></div>
+</section>
+
+<section class="card">
+<h2 class="section-title">🏆 Donor Leaderboard</h2>
+<p class="section-sub">Thank you to everyone helping make the EHS Agriculture Center possible.</p>
+<div id="leaderboard" class="table-wrap"><div class="empty">Loading donors...</div></div>
+</section>
+
+<section class="card">
+<h2 class="section-title">🤝 Our Sponsors</h2>
+<p class="section-sub">Sponsors are recognized publicly according to their total contribution.</p>
+<div id="sponsors" class="sponsors"><div class="empty">Loading sponsors...</div></div>
+</section>
+</div></main>
+<script>
+/* PUBLIC DATA SETUP
+   Google Sheet ID from the user's spreadsheet:
+   1S_pIMC_W0QS79dagSz-ADbLc1KO8tNRWgj6t0qArCYo
+
+   Create a tab named "Donations" with:
+   Column A = Donor name
+   Column B = Donation amount
+   Row 1 should contain headers, e.g. Name | Amount
+
+   This page intentionally displays those names and amounts publicly.
+*/
+const SHEET_ID = '1S_pIMC_W0QS79dagSz-ADbLc1KO8tNRWgj6t0qArCYo';
+const SHEET_NAME = 'Donations';
+const GOAL = 750000;
+
+const tiers = [
+ {name:'Agriculture Center Partner', min:10000, max:Infinity},
+ {name:'Platinum Sponsor', min:5000, max:9999.99},
+ {name:'Gold Sponsor', min:2500, max:4999.99},
+ {name:'Silver Sponsor', min:1000, max:2499.99},
+ {name:'Bronze Sponsor', min:500, max:999.99},
+ {name:'Cultivate Sponsor', min:250, max:499.99}
+];
+
+function money(n){return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:2}).format(n)}
+function cleanAmount(v){return Number(String(v ?? '').replace(/[$,\s]/g,'')) || 0}
+function setTotal(total){
+ total=Math.max(0,Math.min(GOAL,total));
+ const pct=total/GOAL*100;
+ document.getElementById('amount').textContent=money(total);
+ document.getElementById('percent').textContent=(pct%1===0?pct.toFixed(0):pct.toFixed(1))+'%';
+ document.getElementById('remaining').textContent=money(GOAL-total);
+ document.getElementById('fill').style.width=pct+'%';
+ document.getElementById('flower').style.setProperty('--grow',Math.max(.06,pct/100));
+ document.querySelectorAll('.mile').forEach(x=>x.classList.toggle('done',pct>=Number(x.dataset.p)));
+}
+
+async function getSheetRows(){
+ const url=`https://docs.google.com/spreadsheets/d/${encodeURIComponent(SHEET_ID)}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}&headers=1`;
+ const response=await fetch(url,{cache:'no-store'});
+ if(!response.ok) throw new Error('Google Sheet request failed');
+ const text=await response.text();
+ const start=text.indexOf('{'), end=text.lastIndexOf('}');
+ if(start<0 || end<0) throw new Error('Google Sheet did not return data');
+ const json=JSON.parse(text.slice(start,end+1));
+ const cols=json.table.cols || [];
+ const rows=json.table.rows || [];
+ return rows.map(r=>(r.c||[]).map(c=>c?.v ?? ''));
+}
+
+function aggregateDonors(rows){
+ const map=new Map();
+ rows.forEach(row=>{
+   const name=String(row[0] ?? '').trim();
+   const amount=cleanAmount(row[1]);
+   if(!name || amount<=0 || name.toLowerCase()==='name') return;
+   const key=name.toLowerCase();
+   if(!map.has(key)) map.set(key,{name,amount:0});
+   map.get(key).amount += amount;
+ });
+ return [...map.values()].sort((a,b)=>b.amount-a.amount || a.name.localeCompare(b.name));
+}
+
+function renderLeaderboard(donors){
+ const el=document.getElementById('leaderboard');
+ if(!donors.length){el.innerHTML='<div class="empty">No public donations have been added yet.</div>';return;}
+ el.innerHTML=`<table class="leaderboard"><thead><tr><th>Rank</th><th>Donor</th><th class="donation">Total Donated</th></tr></thead><tbody>${donors.map((d,i)=>`<tr><td class="rank">#${i+1}</td><td>${escapeHtml(d.name)}</td><td class="donation">${money(d.amount)}</td></tr>`).join('')}</tbody></table>`;
+}
+
+function renderSponsors(donors){
+ const el=document.getElementById('sponsors');
+ el.innerHTML=tiers.map(t=>{
+   const matches=donors.filter(d=>d.amount>=t.min && d.amount<=t.max);
+   return `<div class="tier"><h3>${t.name}</h3><div class="range">${t.min===10000? '$10,000+':money(t.min)+'–'+money(t.max)}</div>${matches.length?`<ul class="sponsor-list">${matches.map(d=>`<li>${escapeHtml(d.name)} — ${money(d.amount)}</li>`).join('')}</ul>`:'<div class="no-sponsors">No sponsors in this tier yet.</div>'}</div>`;
+ }).join('');
+}
+function escapeHtml(s){return s.replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+
+async function loadPublicDonations(){
+ const err=document.getElementById('error');
+ try{
+   err.style.display='none';
+   const rows=await getSheetRows();
+   const donors=aggregateDonors(rows);
+   const total=donors.reduce((sum,d)=>sum+d.amount,0);
+   setTotal(total);
+   renderLeaderboard(donors);
+   renderSponsors(donors);
+ }catch(e){
+   err.textContent='The public donor list could not be loaded. Make sure the Google Sheet is published to the web and has a tab named “Donations” with donor names in column A and amounts in column B.';
+   err.style.display='block';
+   document.getElementById('leaderboard').innerHTML='<div class="empty">Donor information is temporarily unavailable.</div>';
+   document.getElementById('sponsors').innerHTML='<div class="empty">Sponsor information is temporarily unavailable.</div>';
+ }
+}
+loadPublicDonations();
+setInterval(loadPublicDonations,30000);
+</script>
+</body>
+</html>
